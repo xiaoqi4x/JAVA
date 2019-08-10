@@ -33,7 +33,7 @@ import javax.swing.border.LineBorder;
  * 20160612----add key"reset""crash""currenttime"
  * @author xiaoqi4x
  *
- */
+ **/
 public class CheckRacksInformation implements ActionListener {
 
 	private JFrame frame=new JFrame("7480 Tool");
@@ -47,6 +47,10 @@ public class CheckRacksInformation implements ActionListener {
 	private JScrollPane scrollpane=new JScrollPane(jta1);
 	private JButton bt3=new JButton("Clear");
 	public String[] rackname = null;
+	/**
+	 * 构造函数，添加监听
+	 * 
+	 **/
 	public CheckRacksInformation(){
 		panel.add(label);
 		bt1.addActionListener(this);
@@ -54,6 +58,7 @@ public class CheckRacksInformation implements ActionListener {
 		jta.setLineWrap(true);
 		jta.setBorder(new LineBorder(Color.gray,1));
 		panel.add(scrollpane1);
+		
 		bt2.addActionListener(this);
 		panel.add(bt2);
 		jta1.setEditable(false);
@@ -68,10 +73,17 @@ public class CheckRacksInformation implements ActionListener {
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
+	/**
+	 * 主函数入口
+	 * 
+	 **/
 	public static void main(String[] args) {
 		new CheckRacksInformation();
 	}
-
+	/**
+	 * 重写监听方法
+	 * 
+	 **/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String s=null;
@@ -79,6 +91,10 @@ public class CheckRacksInformation implements ActionListener {
 			jta.setText("");
 			File file=new File("C:\\Tools\\748_racks.txt");
 			try {
+				/**
+				 * 将FileReader传递给BufferedReader，采用BufferedReader的readLine()方法和read()方法来读取文件内容
+				 * 
+				 **/
 				FileReader fr=new FileReader(file);
 				BufferedReader br=new BufferedReader(fr);
 				while((s=br.readLine())!=null){
@@ -92,6 +108,10 @@ public class CheckRacksInformation implements ActionListener {
 			}
 		}else if (e.getSource()==bt2){
 			GUIForTool gui=new GUIForTool();
+			/**
+			 * 定义时间格式
+			 * 
+			 **/
 			Date date=new Date();
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HH_mm");
 			String dateinfor=sdf.format(date);
@@ -103,6 +123,10 @@ public class CheckRacksInformation implements ActionListener {
 			rackname=jta.getText().replace("\n",",").split(",");
 			Socket socket=null;
 			try {
+				/**
+				 * 创建CSV文件记录结果
+				 * 
+				 * */
 				csvfile2=File.createTempFile("748_rack_information"+dateinfor,".csv",csvfile);
 				fw=new FileWriter(csvfile2.getPath());
 				bw=new BufferedWriter(fw);
